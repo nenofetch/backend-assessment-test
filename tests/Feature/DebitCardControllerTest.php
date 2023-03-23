@@ -75,6 +75,32 @@ class DebitCardControllerTest extends TestCase
     public function testCustomerCanCreateADebitCard()
     {
         // post /debit-cards
+        $response = $this->post('/api/debit-cards', [
+            'type' => 'VISATEST'
+        ]);
+
+        $response->assertCreated();
+
+        $response->assertJsonStructure([
+            'id',
+            'number',
+            'type',
+            'expiration_date'
+        ]);
+
+        $data = $response->json();
+
+        $response->assertJsonFragment([
+            'id' => $data['id'],
+            'number' => $data['number'],
+            'type' => $data['type']
+        ]);
+
+        $this->assertDatabaseHas('debit_cards', [
+            'id' => $data['id'],
+            'number' => $data['number'],
+            'type' => $data['type']
+        ]);
     }
 
     public function testCustomerCanSeeASingleDebitCardDetails()
