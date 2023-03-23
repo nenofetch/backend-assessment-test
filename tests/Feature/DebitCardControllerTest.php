@@ -230,7 +230,7 @@ class DebitCardControllerTest extends TestCase
         $this->assertDatabaseHas('debit_cards', [
 
             'id' => $debitCards->id,
-            'deleted_at' => $debitCards->fresh()->delelte_at
+            'deleted_at' => $debitCards->fresh()->delete_at
         ]);
     }
 
