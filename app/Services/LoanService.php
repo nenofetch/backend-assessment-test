@@ -21,7 +21,17 @@ class LoanService
      */
     public function createLoan(User $user, int $amount, string $currencyCode, int $terms, string $processedAt): Loan
     {
-        //
+        $loans = new Loan([
+            'user_id' => $user->id,
+            'amount' => $amount,
+            'currency_code' => $currencyCode,
+            'terms' => $terms,
+            'processed_at' => $processedAt,
+        ]);
+
+        $loans->save();
+
+        return $loans;
     }
 
     /**
@@ -37,5 +47,15 @@ class LoanService
     public function repayLoan(Loan $loan, int $amount, string $currencyCode, string $receivedAt): ReceivedRepayment
     {
         //
+        $repayLoans = new ReceivedRepayment([
+            'loan_id' => $loan->id,
+            'amount' => $amount,
+            'currency_code' => $currencyCode,
+            'received_at' => $receivedAt,
+        ]);
+
+        $repayLoans->save();
+
+        return $repayLoans;
     }
 }
